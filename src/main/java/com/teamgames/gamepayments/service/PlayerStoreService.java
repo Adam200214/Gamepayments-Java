@@ -1,20 +1,22 @@
-package com.teamgames.gamepayments;
+package com.teamgames.gamepayments.service;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
-
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
-import com.teamgames.gamepayments.service.ConfigurationService;
+import com.teamgames.gamepayments.PlayerStoreResponse;
 import com.teamgames.request.Connection;
 
-public class PlayerStore {
+public class PlayerStoreService {
+
+	private final ConfigurationService configurationService;
 
 	@Inject
-	private ConfigurationService configurationService;
-	
+	public PlayerStoreService(ConfigurationService configurationService) {
+		this.configurationService = configurationService;
+	}
+
 	public PlayerStoreResponse confirmUsername(String apiKey, String username, String verificationKey) throws Exception {
 		Map<String, Object> params = new LinkedHashMap<>();
 
@@ -31,7 +33,6 @@ public class PlayerStore {
 	}
 
 	public PlayerStoreResponse sellProduct(String apiKey, String username, int productId, String productName, double price, int quantity) throws Exception {
-
 		Map<String, Object> params = new LinkedHashMap<>();
 
 		params.put("username", username);

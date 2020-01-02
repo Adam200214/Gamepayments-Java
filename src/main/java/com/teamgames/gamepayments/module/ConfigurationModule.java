@@ -3,8 +3,6 @@ package com.teamgames.gamepayments.module;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import com.teamgames.GamePayments;
-import com.teamgames.gamepayments.configuration.Configuration;
-import com.teamgames.gamepayments.service.ConfigurationService;
 
 import java.io.IOException;
 import java.io.InputStream;

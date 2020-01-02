@@ -4,53 +4,56 @@ package com.teamgames;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.teamgames.gamepayments.PlayerStore;
-import com.teamgames.gamepayments.configuration.Configuration;
+import com.teamgames.gamepayments.service.PlayerStoreService;
 import com.teamgames.gamepayments.module.ConfigurationModule;
 import com.teamgames.gamepayments.service.ConfigurationService;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import com.teamgames.gamepayments.service.TransactionService;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GamePayments {
 
-	private static final Logger logger = Logger.getLogger(GamePayments.class.getName());
+	private final PlayerStoreService store;
 
-	private final PlayerStore playerStore;
+	private final TransactionService transactions;
 
-	private static GamePayments instance;
-
-	@Inject
-	private GamePayments(PlayerStore playerStore) {
-		this.playerStore = playerStore;
+	private GamePayments(Builder builder) {
+		this.store = builder.store;
+		this.transactions = builder.transactions;
 	}
-	
-	public static void main(String args[]) {
-		try {
-			logger.info("Initializing GamePayments...");
 
+	public PlayerStoreService getStore() {
+		return store;
+	}
+
+	public TransactionService getTransactions() {
+		return transactions;
+	}
+
+	public static class Builder {
+
+		private final PlayerStoreService store;
+
+		private final TransactionService transactions;
+
+		public Builder(PlayerStoreService store, TransactionService transactions) {
+			this.store = store;
+			this.transactions = transactions;
+		}
+
+		public Builder() {
 			Injector injector = Guice.createInjector(new ConfigurationModule());
 
-			ConfigurationService configurationService = injector.getInstance(ConfigurationService.class);
+			store = injector.getInstance(PlayerStoreService.class);
 
-			instance = injector.getInstance(GamePayments.class);
-
-			logger.info(String.format("Finished initializing Teamgames API version %s", configurationService.getConfiguration().getVersion()));
-		} catch (Throwable throwable) {
-			logger.log(Level.SEVERE, "Failed to initialize GamePayments, something fatal occurred.", throwable);
+			transactions = injector.getInstance(TransactionService.class);
 		}
-	}
 
-	public static GamePayments getInstance() {
-		if (instance == null) {
-			throw new IllegalStateException("The instance is null. The reference either hasn't been initialized or was disposed of.");
+		public GamePayments build() {
+			return new GamePayments(this);
 		}
-		return instance;
+
 	}
 
 }
