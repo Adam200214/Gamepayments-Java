@@ -1,11 +1,12 @@
-package com.teamgames.gamepayments.request.claim;
+package com.teamgames.gamepayments.request.impl.claim;
 
 import com.teamgames.gamepayments.request.Request;
+import com.teamgames.gamepayments.request.result.impl.ClaimRequestResult;
 
 /**
  * Created by Jason MK on 2020-01-02 at 2:41 p.m.
  */
-public class ClaimRequest implements Request {
+public class ClaimRequest implements Request<ClaimRequestResult> {
 
     private final String apiKey;
 
@@ -22,5 +23,10 @@ public class ClaimRequest implements Request {
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public ClaimRequestResult call() throws Exception {
+        return null;
     }
 }
