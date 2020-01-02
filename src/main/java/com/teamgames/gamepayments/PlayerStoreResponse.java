@@ -3,6 +3,7 @@ package com.teamgames.gamepayments;
 public class PlayerStoreResponse {
 	
 	private final String message;
+
 	private final String extendedMessage;
 
 	public PlayerStoreResponse(String message, String extendedMessage) {
