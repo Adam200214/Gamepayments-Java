@@ -3,7 +3,7 @@ package com.teamgames.gamepayments;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.google.gson.Gson;
+import com.google.gson.Gson;
 
 import com.teamgames.request.Connection;
 

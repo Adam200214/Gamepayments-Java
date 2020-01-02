@@ -4,7 +4,7 @@ public class PlayerStoreResponse {
 	
 	String message;
 	String extendedMessage;
-	
+
 	public String getMessage() {
 		return message;
 	}

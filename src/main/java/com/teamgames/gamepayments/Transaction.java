@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.google.gson.*;
+import com.google.gson.Gson;
 
 import com.teamgames.request.Connection;
 
@@ -62,8 +62,7 @@ public class Transaction {
 				
 				if (!orders.isEmpty()) {
 					if (orders.contains(invoice)) {
-						apiResponse.message = "ALREADY_PROCESSED";
-						apiResponse.extendedMessage = "Transaction has already been processed.";
+						apiResponse = new TransactionResponse("ALREADY_PROCESSED", "Transaction has already been processed.", apiResponse.getTransactions());
 					}
 				}
 				

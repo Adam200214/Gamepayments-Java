@@ -6,10 +6,18 @@ package com.teamgames.gamepayments;
 
 public class TransactionResponse {
 	
-	String message;
-	String extendedMessage;
-	Transaction[] transactions;
-	
+	private final String message;
+
+	private final String extendedMessage;
+
+	private final Transaction[] transactions;
+
+	public TransactionResponse(String message, String extendedMessage, Transaction[] transactions) {
+		this.message = message;
+		this.extendedMessage = extendedMessage;
+		this.transactions = transactions;
+	}
+
 	public Transaction[] getTransactions() {
 		return transactions;
 	}
