@@ -50,4 +50,5 @@ public class PlayerStoreService {
 		return new GsonBuilder().create().fromJson(serverResponse, PlayerStoreResponse.class);
 
 	}
+
 }
