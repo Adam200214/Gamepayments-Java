@@ -6,31 +6,31 @@ package com.teamgames.gamepayments.model;
 
 public class Transaction {
 
-	public final String productId;
+	private final String productId;
 
-	public final String name;
+	private final String name;
 
-	public final float price;
+	private final float price;
 
-	public final float priceWithDiscount;
+	private final float priceWithDiscount;
 
-	public final int quantity;
+	private final int quantity;
 
-	public final int allowReclaim;
+	private final int allowReclaim;
 
-	public final int gameServer;
+	private final int gameServer;
 
-	public final String username;
+	private final String username;
 
-	public final String paymentType;
+	private final String paymentType;
 
-	public final float tax;
+	private final float tax;
 
-	public final String invoice;
+	private final String invoice;
 
-	public final String paymentStatus;
+	private final String paymentStatus;
 
-	public final String deliveryStatus;
+	private final String deliveryStatus;
 
 	public Transaction(String productId, String name, float price, float priceWithDiscount, int quantity, int allowReclaim, int gameServer, String username, String paymentType, float tax, String invoice, String paymentStatus, String deliveryStatus) {
 		this.productId = productId;
