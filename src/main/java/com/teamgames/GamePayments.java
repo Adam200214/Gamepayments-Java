@@ -5,43 +5,50 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.teamgames.gamepayments.module.ConfigurationModule;
 import com.teamgames.gamepayments.module.HttpClientModule;
+import com.teamgames.gamepayments.service.HttpClientService;
 import com.teamgames.gamepayments.service.PlayerStoreService;
-import com.teamgames.gamepayments.service.TransactionService;
-import org.apache.http.client.fluent.Executor;
+import com.teamgames.gamepayments.service.ClaimService;
 
 public class GamePayments {
 
-	private final PlayerStoreService store;
+	private final PlayerStoreService storeService;
 
-	private final TransactionService transactions;
+	private final ClaimService claimService;
 
-	private final Executor httpClient;
+	private final HttpClientService httpClientService;
+
+	private final String apiKey;
 
 	private GamePayments(Builder builder) {
-		this.store = builder.store;
-		this.transactions = builder.transactions;
-		this.httpClient = builder.httpClient;
+		this.storeService = builder.storeService;
+		this.claimService = builder.claimService;
+		this.httpClientService = builder.httpClientService;
+		this.apiKey = builder.apiKey;
 	}
 
-	public PlayerStoreService getStore() {
-		return store;
+	public PlayerStoreService getStoreService() {
+		return storeService;
 	}
 
-	public TransactionService getTransactions() {
-		return transactions;
+	public ClaimService getClaimService() {
+		return claimService;
 	}
 
-	public Executor getHttpClient() {
-		return httpClient;
+	public HttpClientService getHttpClientService() {
+		return httpClientService;
+	}
+
+	public String getApiKey() {
+		return apiKey;
 	}
 
 	public static class Builder {
 
-		private final PlayerStoreService store;
+		private final PlayerStoreService storeService;
 
-		private final TransactionService transactions;
+		private final ClaimService claimService;
 
-		private final Executor httpClient;
+		private final HttpClientService httpClientService;
 
 		private final String apiKey;
 
@@ -49,9 +56,9 @@ public class GamePayments {
 			Injector injector = Guice.createInjector(new ConfigurationModule(), new HttpClientModule());
 
 			this.apiKey = apiKey;
-			this.store = injector.getInstance(PlayerStoreService.class);
-			this.transactions = injector.getInstance(TransactionService.class);
-			this.httpClient = injector.getInstance(Executor.class);
+			this.storeService = injector.getInstance(PlayerStoreService.class);
+			this.claimService = injector.getInstance(ClaimService.class);
+			this.httpClientService = injector.getInstance(HttpClientService.class);
 		}
 
 		public GamePayments build() {

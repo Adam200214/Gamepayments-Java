@@ -2,7 +2,7 @@ package com.teamgames.gamepayments.service;
 
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
-import com.teamgames.gamepayments.PlayerStoreResponse;
+import com.teamgames.gamepayments.model.PlayerStoreResponse;
 import com.teamgames.request.Connection;
 
 import java.util.LinkedHashMap;

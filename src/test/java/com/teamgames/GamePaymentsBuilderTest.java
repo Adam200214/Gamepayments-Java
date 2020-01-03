@@ -16,7 +16,7 @@ public class GamePaymentsBuilderTest {
         GamePayments payments = new GamePayments.Builder("test").build();
 
         Assert.assertNotNull(payments);
-        Assert.assertNotNull(payments.getStore());
-        Assert.assertNotNull(payments.getTransactions());
+        Assert.assertNotNull(payments.getStoreService());
+        Assert.assertNotNull(payments.getClaimService());
     }
 }

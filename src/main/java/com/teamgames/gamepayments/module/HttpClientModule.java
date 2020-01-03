@@ -11,7 +11,7 @@ public class HttpClientModule extends AbstractModule {
 
     @Provides
     public Executor provide() {
-        return Executor.newInstance();
+        return Executor.newInstance().clearAuth().clearCookies();
     }
 
 }

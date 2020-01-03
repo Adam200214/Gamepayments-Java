@@ -1,4 +1,4 @@
-package com.teamgames.gamepayments;
+package com.teamgames.gamepayments.model;
 
 import com.teamgames.gamepayments.model.Transaction;
 

@@ -8,3 +8,5 @@ bin/*
 /build/
 /.idea
 /.gradle
+
+/src/test/resources/apikey.properties

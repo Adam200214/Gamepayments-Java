@@ -35,9 +35,10 @@ public class RequestEvent<T extends Result, R extends Request<T>> {
     }
 
     public void poll(RequestEventProcessor<T, R> processor) {
-        if (eventResult != null) {
+        if (eventResult != RequestEventResult.NONE) {
             return;
         }
+        System.out.println("state: " + phase);
         LocalDateTime now = LocalDateTime.now();
 
         if (now.isAfter(timestamp.plus(maximumDuration))) {
@@ -45,6 +46,7 @@ public class RequestEvent<T extends Result, R extends Request<T>> {
             return;
         }
         if (phase == RequestEventPhase.IDLE) {
+            System.out.println("requesting...");
             phase = RequestEventPhase.REQUESTING;
             futureResult = processor.getService().submit(() -> request.create(processor.getHttpClient()));
         } else if (phase == RequestEventPhase.REQUESTING) {
@@ -60,6 +62,7 @@ public class RequestEvent<T extends Result, R extends Request<T>> {
                 try {
                     result = futureResult.get();
                     phase = RequestEventPhase.COMPLETE;
+                    eventResult = RequestEventResult.OK;
                 } catch (InterruptedException | ExecutionException e) {
                     eventResult = RequestEventResult.FAILED_ERRONEOUSLY;
                     e.printStackTrace();
