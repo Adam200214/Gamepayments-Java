@@ -1,5 +1,6 @@
 package com.teamgames;
 
+import com.teamgames.gamepayments.GamePayments;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

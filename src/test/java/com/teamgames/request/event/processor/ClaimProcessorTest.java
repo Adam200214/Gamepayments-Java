@@ -1,13 +1,10 @@
 package com.teamgames.request.event.processor;
 
-import com.teamgames.GamePayments;
+import com.teamgames.gamepayments.GamePayments;
 import com.teamgames.gamepayments.request.event.RequestEvent;
 import com.teamgames.gamepayments.request.event.RequestEventResult;
-import com.teamgames.gamepayments.request.event.processor.impl.ClaimProcessor;
 import com.teamgames.gamepayments.request.impl.claim.ClaimRequest;
 import com.teamgames.gamepayments.request.result.impl.ClaimRequestResult;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

@@ -2,7 +2,7 @@ package com.teamgames.gamepayments.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import com.teamgames.GamePayments;
+import com.teamgames.gamepayments.GamePayments;
 
 import java.io.IOException;
 import java.io.InputStream;

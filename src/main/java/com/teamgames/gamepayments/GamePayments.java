@@ -1,4 +1,4 @@
-package com.teamgames;
+package com.teamgames.gamepayments;
 
 
 import com.google.inject.Guice;
