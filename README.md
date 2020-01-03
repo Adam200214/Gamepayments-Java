@@ -45,4 +45,7 @@ String username = "bar";
 payments.getClaimService().submit(apiKey, username);
 ```
 
+## Credits
+[Jason MacKeigan](https://github.com/JasonMacKeigan)
+
 
