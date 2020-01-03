@@ -5,9 +5,9 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.teamgames.gamepayments.module.ConfigurationModule;
 import com.teamgames.gamepayments.module.HttpClientModule;
+import com.teamgames.gamepayments.service.ClaimService;
 import com.teamgames.gamepayments.service.HttpClientService;
 import com.teamgames.gamepayments.service.PlayerStoreService;
-import com.teamgames.gamepayments.service.ClaimService;
 
 public class GamePayments {
 

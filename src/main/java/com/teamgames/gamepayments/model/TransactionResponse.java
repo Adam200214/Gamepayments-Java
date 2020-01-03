@@ -1,7 +1,5 @@
 package com.teamgames.gamepayments.model;
 
-import com.teamgames.gamepayments.model.Transaction;
-
 /**
  * @author Nelson Sanchez
  */

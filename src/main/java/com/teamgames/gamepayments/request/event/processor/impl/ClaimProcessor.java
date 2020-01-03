@@ -4,9 +4,6 @@ import com.google.inject.Inject;
 import com.teamgames.gamepayments.request.event.processor.RequestEventProcessor;
 import com.teamgames.gamepayments.request.impl.claim.ClaimRequest;
 import com.teamgames.gamepayments.request.result.impl.ClaimRequestResult;
-import com.teamgames.gamepayments.request.result.listener.impl.ResultErrorListener;
-import com.teamgames.gamepayments.request.result.listener.impl.ResultOkListener;
-import com.teamgames.gamepayments.request.result.listener.impl.ResultTimeoutListener;
 import org.apache.http.client.fluent.Executor;
 
 /**

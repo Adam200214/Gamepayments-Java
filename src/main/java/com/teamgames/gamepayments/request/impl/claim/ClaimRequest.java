@@ -1,7 +1,6 @@
 package com.teamgames.gamepayments.request.impl.claim;
 
 import com.google.gson.GsonBuilder;
-import com.teamgames.gamepayments.model.TransactionResponse;
 import com.teamgames.gamepayments.request.Request;
 import com.teamgames.gamepayments.request.result.impl.ClaimRequestResult;
 import org.apache.commons.codec.binary.Base64;
