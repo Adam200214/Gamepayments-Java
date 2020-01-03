@@ -14,7 +14,7 @@ import java.time.Duration;
 /**
  * Created by Jason MK on 2020-01-02 at 1:11 p.m.
  */
-public class ClaimService {
+public class ClaimService implements Runnable {
 
     private final ClaimProcessor claimProcessor;
 
@@ -23,6 +23,7 @@ public class ClaimService {
         this.claimProcessor = claimProcessor;
     }
 
+    @Override
     public void run() {
         claimProcessor.process();
     }
