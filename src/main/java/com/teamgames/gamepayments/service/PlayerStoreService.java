@@ -1,12 +1,12 @@
 package com.teamgames.gamepayments.service;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 import com.teamgames.gamepayments.PlayerStoreResponse;
 import com.teamgames.request.Connection;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class PlayerStoreService {
 

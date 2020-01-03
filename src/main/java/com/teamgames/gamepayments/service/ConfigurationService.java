@@ -15,6 +15,18 @@ public class ConfigurationService {
         this.configuration = configuration;
     }
 
+    public String getAddress() {
+        return configuration.isLocal() ? configuration.getLocalAddress() : configuration.getAddress();
+    }
+
+    public boolean isLocal() {
+        return configuration.isLocal();
+    }
+
+    public String getVersion() {
+        return configuration.getVersion();
+    }
+
     public Configuration getConfiguration() {
         return configuration;
     }

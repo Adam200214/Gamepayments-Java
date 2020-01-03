@@ -2,7 +2,6 @@ package com.teamgames.gamepayments.service;
 
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
-import com.teamgames.gamepayments.Configurations;
 import com.teamgames.gamepayments.TransactionResponse;
 import com.teamgames.request.Connection;
 
@@ -26,11 +25,10 @@ public class TransactionService {
 
         params.put("username", username);
 
-        final String ADDRESS = Configurations.isLocal ? Configurations.LOCAL_ADDRESS
-                : Configurations.GAMEPAYMENTS_ADDRESS;
+        final String address = configurationService.getAddress();
 
         final String serverResponse = Connection.sendPostParams(params,
-                ADDRESS + "/api/v1/client/global/claim-purchase", apiKey);
+                address + "/api/v1/client/global/claim-purchase", apiKey);
 
         return new GsonBuilder().create().fromJson(serverResponse, TransactionResponse.class);
 

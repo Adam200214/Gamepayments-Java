@@ -1,9 +1,13 @@
-package com.teamgames.gamepayments.request;
+package com.teamgames.gamepayments.request.event.processor;
 
+import com.teamgames.gamepayments.request.Request;
+import com.teamgames.gamepayments.request.event.RequestEvent;
+import com.teamgames.gamepayments.request.event.RequestEventResult;
 import com.teamgames.gamepayments.request.result.Result;
 import com.teamgames.gamepayments.request.result.listener.impl.ResultErrorListener;
 import com.teamgames.gamepayments.request.result.listener.impl.ResultOkListener;
 import com.teamgames.gamepayments.request.result.listener.impl.ResultTimedOutListener;
+import org.apache.http.client.fluent.Executor;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
@@ -26,10 +30,17 @@ public class RequestEventProcessor<T extends Result, R extends Request<T>> {
 
     private final ResultTimedOutListener<T, R> timedOutListener;
 
-    public RequestEventProcessor(ResultErrorListener<T, R> errorListener, ResultOkListener<T, R> okListener, ResultTimedOutListener<T, R> timedOutListener) {
+    private final Executor httpClient;
+
+    public RequestEventProcessor(Executor httpClient, ResultErrorListener<T, R> errorListener, ResultOkListener<T, R> okListener, ResultTimedOutListener<T, R> timedOutListener) {
+        this.httpClient = httpClient;
         this.errorListener = errorListener;
         this.okListener = okListener;
         this.timedOutListener = timedOutListener;
+    }
+
+    protected void submit(RequestEvent<T, R> request) {
+        events.offer(request);
     }
 
     public void process() {
@@ -43,8 +54,10 @@ public class RequestEventProcessor<T extends Result, R extends Request<T>> {
             RequestEventResult eventResult = event.getEventResult();
 
             if (eventResult == RequestEventResult.NONE) {
+                event.poll(this);
                 continue;
             }
+
             iterator.remove();
 
             if (eventResult == RequestEventResult.OK) {
@@ -61,6 +74,10 @@ public class RequestEventProcessor<T extends Result, R extends Request<T>> {
                 errorListener.listen(request, null);
             }
         }
+    }
+
+    public Executor getHttpClient() {
+        return httpClient;
     }
 
     public ExecutorService getService() {

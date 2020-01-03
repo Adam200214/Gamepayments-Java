@@ -29,7 +29,6 @@ public class Connection {
 				postData.append('=');
 				postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
 			}
-
 			byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
 			connection = (HttpURLConnection) url.openConnection();

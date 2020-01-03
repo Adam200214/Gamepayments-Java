@@ -1,5 +1,7 @@
-package com.teamgames.gamepayments.request;
+package com.teamgames.gamepayments.request.event;
 
+import com.teamgames.gamepayments.request.Request;
+import com.teamgames.gamepayments.request.event.processor.RequestEventProcessor;
 import com.teamgames.gamepayments.request.result.Result;
 
 import java.time.Duration;
@@ -18,7 +20,7 @@ public class RequestEvent<T extends Result, R extends Request<T>> {
 
     private final Duration maximumDuration;
 
-    private RequestPhase phase = RequestPhase.IDLE;
+    private RequestEventPhase phase = RequestEventPhase.IDLE;
 
     private Future<T> futureResult;
 
@@ -42,10 +44,10 @@ public class RequestEvent<T extends Result, R extends Request<T>> {
             eventResult = RequestEventResult.TIMED_OUT;
             return;
         }
-        if (phase == RequestPhase.IDLE) {
-            phase = RequestPhase.REQUESTING;
-            futureResult = processor.getService().submit(request);
-        } else if (phase == RequestPhase.REQUESTING) {
+        if (phase == RequestEventPhase.IDLE) {
+            phase = RequestEventPhase.REQUESTING;
+            futureResult = processor.getService().submit(() -> request.create(processor.getHttpClient()));
+        } else if (phase == RequestEventPhase.REQUESTING) {
             if (futureResult == null) {
                 eventResult = RequestEventResult.FAILED_ERRONEOUSLY;
                 return;
@@ -57,7 +59,7 @@ public class RequestEvent<T extends Result, R extends Request<T>> {
             if (futureResult.isDone()) {
                 try {
                     result = futureResult.get();
-                    phase = RequestPhase.COMPLETE;
+                    phase = RequestEventPhase.COMPLETE;
                 } catch (InterruptedException | ExecutionException e) {
                     eventResult = RequestEventResult.FAILED_ERRONEOUSLY;
                     e.printStackTrace();
