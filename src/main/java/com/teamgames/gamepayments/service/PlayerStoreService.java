@@ -14,18 +14,18 @@ public class PlayerStoreService {
 	private final HttpService http;
 
 	@Inject
-	public PlayerStoreService(HttpService httpService) {
-		this.http = httpService;
+	public PlayerStoreService(HttpService http) {
+		this.http = http;
 	}
 
 	public PlayerStoreResponse confirmUsername(String username, String verificationKey) {
 		final ConfirmUsernameDTO request = new ConfirmUsernameDTO(username, verificationKey);
-		return http.post(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT);
+		return http.postBlocking(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT);
 	}
 
 	public PlayerStoreResponse sellProduct(String username, int productId, String productName, double price, int quantity) {
 		final SellProductDTO request = new SellProductDTO(username, productName, productId, quantity, price);
-		return http.post(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT);
+		return http.postBlocking(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT);
 	}
 
 	@Data

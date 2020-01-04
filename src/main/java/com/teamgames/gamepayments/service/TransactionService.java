@@ -16,13 +16,13 @@ public class TransactionService {
     private final HttpService http;
 
     @Inject
-    public TransactionService(HttpService httpService) {
-        this.http = httpService;
+    public TransactionService(HttpService http) {
+        this.http = http;
     }
 
     public TransactionResponse claimPurchases(String username) {
         final ClaimPurchasesDTO request = new ClaimPurchasesDTO(username);
-        return http.post(TransactionResponse.class, request, CLAIM_PURCHASE_ENDPOINT);
+        return http.postBlocking(TransactionResponse.class, request, CLAIM_PURCHASE_ENDPOINT);
     }
 
     @Data

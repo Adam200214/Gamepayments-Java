@@ -4,6 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import lombok.Getter;
 
+import java.util.Objects;
+
 /**
  * Created by Jason MK on 2020-01-02 at 12:15 p.m.
  */
@@ -20,11 +22,11 @@ public class Configuration {
             @Named("gamepayments.address") String address,
             @Named("gamepayments.local.enabled") boolean local,
             @Named("gamepayments.local.address") String localAddress) {
-        this.key = key;
-        this.version = version;
-        this.address = address;
+        this.key = Objects.requireNonNull(key);
+        this.version = Objects.requireNonNull(version);
+        this.address = Objects.requireNonNull(address);
         this.local = local;
-        this.localAddress = localAddress;
+        this.localAddress = Objects.requireNonNull(localAddress);
     }
 
     public String getAPIEndpoint() {

@@ -35,12 +35,12 @@ public class HttpService implements Closeable {
         this.agent = String.format(DEFAULT_USER_AGENT, configuration.getVersion());
     }
 
-    public <R, P> Publisher<R> postAsync(Class<R> type, P payload, String endpoint) {
+    public <R, P> Publisher<R> post(Class<R> type, P payload, String endpoint) {
         final MutableHttpRequest<P> request = initialise(HttpRequest.POST(endpoint, payload));
         return client.retrieve(request, type);
     }
 
-    public <R, P> R post(Class<R> type, P payload, String endpoint) {
+    public <R, P> R postBlocking(Class<R> type, P payload, String endpoint) {
         final MutableHttpRequest<P> request = initialise(HttpRequest.POST(endpoint, payload));
         return client.toBlocking().retrieve(request, type);
     }

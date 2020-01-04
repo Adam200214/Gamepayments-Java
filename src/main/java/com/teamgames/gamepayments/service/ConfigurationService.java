@@ -5,6 +5,8 @@ import com.google.inject.Singleton;
 import com.teamgames.gamepayments.configuration.Configuration;
 import lombok.Getter;
 
+import java.util.Objects;
+
 /**
  * Created by Jason MK on 2020-01-02 at 12:18 p.m.
  */
@@ -16,6 +18,6 @@ public class ConfigurationService {
 
     @Inject
     public ConfigurationService(Configuration configuration) {
-        this.configuration = configuration;
+        this.configuration = Objects.requireNonNull(configuration);
     }
 }
