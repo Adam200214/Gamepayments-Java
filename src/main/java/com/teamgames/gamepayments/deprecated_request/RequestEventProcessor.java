@@ -5,9 +5,9 @@ import com.teamgames.gamepayments.request.result.listener.impl.ResultErrorListen
 import com.teamgames.gamepayments.request.result.listener.impl.ResultOkListener;
 import com.teamgames.gamepayments.request.result.listener.impl.ResultTimedOutListener;
 
-import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
  */
 public class RequestEventProcessor<T extends Result, R extends Request<T>> {
 
-    private final Queue<RequestEvent<T, R>> events = new ArrayDeque<>();
+    private final Queue<RequestEvent<T, R>> events = new ConcurrentLinkedDeque<>();
 
     private final ExecutorService service = Executors.newFixedThreadPool(Math.max(1, Runtime.getRuntime().availableProcessors() / 2));
 

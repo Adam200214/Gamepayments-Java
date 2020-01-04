@@ -1,10 +1,7 @@
 package com.teamgames.gamepayments.service;
 
-import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
-import com.teamgames.gamepayments.Configurations;
-import com.teamgames.gamepayments.TransactionResponse;
-import com.teamgames.request.Connection;
+import com.teamgames.gamepayments.response.TransactionResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,25 +11,20 @@ import java.util.Map;
  */
 public class TransactionService {
 
-    private final ConfigurationService configurationService;
+    private static final String CLAIM_PURCHASE_ENDPOINT = "/api/v1/client/global/claim-purchase";
+
+    private final HttpService http;
 
     @Inject
-    public TransactionService(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
+    public TransactionService(HttpService httpService) {
+        this.http = httpService;
     }
 
-    public TransactionResponse getResponse(String apiKey, String username) throws Exception {
+    public TransactionResponse claimPurchases(String username) throws Exception {
         Map<String, Object> params = new HashMap<>();
 
         params.put("username", username);
 
-        final String ADDRESS = Configurations.isLocal ? Configurations.LOCAL_ADDRESS
-                : Configurations.GAMEPAYMENTS_ADDRESS;
-
-        final String serverResponse = Connection.sendPostParams(params,
-                ADDRESS + "/api/v1/client/global/claim-purchase", apiKey);
-
-        return new GsonBuilder().create().fromJson(serverResponse, TransactionResponse.class);
-
+        return http.post(TransactionResponse.class, params, CLAIM_PURCHASE_ENDPOINT);
     }
 }

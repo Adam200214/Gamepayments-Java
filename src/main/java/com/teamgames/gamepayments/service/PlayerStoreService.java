@@ -1,39 +1,34 @@
 package com.teamgames.gamepayments.service;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
-import com.teamgames.gamepayments.PlayerStoreResponse;
-import com.teamgames.request.Connection;
+import com.teamgames.gamepayments.response.PlayerStoreResponse;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerStoreService {
 
-	private final ConfigurationService configurationService;
+	private static final String CONFIRM_USERNAME_ENDPOINT = "/api/v1/client/global/confirm-player-seller";
+	private static final String SELL_PRODUCT_ENDPOINT = "/api/v1/client/global/sell-player-product";
+
+	private final HttpService http;
 
 	@Inject
-	public PlayerStoreService(ConfigurationService configurationService) {
-		this.configurationService = configurationService;
+	public PlayerStoreService(HttpService httpService) {
+		this.http = httpService;
 	}
 
-	public PlayerStoreResponse confirmUsername(String apiKey, String username, String verificationKey) throws Exception {
-		Map<String, Object> params = new LinkedHashMap<>();
+	public PlayerStoreResponse confirmUsername(String username, String verificationKey) {
+		Map<String, Object> params = new HashMap<>();
 
 		params.put("username", username);
-
 		params.put("verificationKey", verificationKey);
 
-		final String address = configurationService.getConfiguration().isLocal() ? configurationService.getConfiguration().getLocalAddress()
-				: configurationService.getConfiguration().getAddress();
-
-		final String serverResponse = Connection.sendPostParams(params, address + "/api/v1/client/global/confirm-player-seller", apiKey);
-
-		return new GsonBuilder().create().fromJson(serverResponse, PlayerStoreResponse.class);
+		return http.post(PlayerStoreResponse.class, params, CONFIRM_USERNAME_ENDPOINT);
 	}
 
-	public PlayerStoreResponse sellProduct(String apiKey, String username, int productId, String productName, double price, int quantity) throws Exception {
-		Map<String, Object> params = new LinkedHashMap<>();
+	public PlayerStoreResponse sellProduct(String username, int productId, String productName, double price, int quantity) {
+		Map<String, Object> params = new HashMap<>();
 
 		params.put("username", username);
 		params.put("productId", productId);
@@ -41,14 +36,6 @@ public class PlayerStoreService {
 		params.put("price", price);
 		params.put("quantity", quantity);
 
-		final String address = configurationService.getConfiguration().isLocal() ? configurationService.getConfiguration().getLocalAddress()
-				: configurationService.getConfiguration().getAddress();
-
-		final String serverResponse = Connection.sendPostParams(params,
-				address + "/api/v1/client/global/sell-player-product", apiKey);
-
-		return new GsonBuilder().create().fromJson(serverResponse, PlayerStoreResponse.class);
-
+		return http.post(PlayerStoreResponse.class, params, SELL_PRODUCT_ENDPOINT);
 	}
-
 }

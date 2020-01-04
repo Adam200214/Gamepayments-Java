@@ -46,15 +46,9 @@ public class RequestEvent<T extends Result, R extends Request<T>> {
             phase = RequestPhase.REQUESTING;
             futureResult = processor.getService().submit(request);
         } else if (phase == RequestPhase.REQUESTING) {
-            if (futureResult == null) {
+            if (futureResult == null || futureResult.isCancelled()) {
                 eventResult = RequestEventResult.FAILED_ERRONEOUSLY;
-                return;
-            }
-            if (futureResult.isCancelled()) {
-                eventResult = RequestEventResult.FAILED_ERRONEOUSLY;
-                return;
-            }
-            if (futureResult.isDone()) {
+            } else if (futureResult.isDone()) {
                 try {
                     result = futureResult.get();
                     phase = RequestPhase.COMPLETE;
