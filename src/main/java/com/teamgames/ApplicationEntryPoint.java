@@ -7,9 +7,11 @@ import com.teamgames.gamepayments.service.PlayerStoreService.ConfirmUsernameDTO;
 import com.teamgames.gamepayments.service.PlayerStoreService.SellProductDTO;
 import com.teamgames.gamepayments.service.TransactionService;
 import com.teamgames.gamepayments.service.TransactionService.ClaimPurchasesDTO;
+import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
+import java.io.PrintStream;
 import java.util.List;
 
 public class ApplicationEntryPoint {
@@ -19,7 +21,7 @@ public class ApplicationEntryPoint {
             final PlayerStoreService store = payments.getStore();
             final TransactionService transactions = payments.getTransactions();
 
-            final Subscriber<Object> subscriber = new SimpleSubscriberAdapter<>();
+            final Player player = new LoggingPlayer(System.out);
 
             final ConfirmUsernameDTO confirm = ConfirmUsernameDTO.builder().username("test").verificationKey("test").build();
             final SellProductDTO sell = SellProductDTO.builder().price(123).productId(123).productName("test").quantity(123).username("test").build();
@@ -28,9 +30,9 @@ public class ApplicationEntryPoint {
             //asynchronous requests
             System.out.println("Beginning asynchronous requests");
 
-            store.confirmUsername(confirm, subscriber);
-            store.sellProduct(sell, subscriber);
-            transactions.claimPurchases(claim, subscriber);
+            store.confirmUsername(confirm, new ResultSubscriberAdapter<>(player));
+            store.sellProduct(sell, new ResultSubscriberAdapter<>(player));
+            transactions.claimPurchases(claim, new ResultSubscriberAdapter<>(player));
 
             //synchronous requests
             System.out.println("Beginning synchronous requests");
@@ -45,7 +47,13 @@ public class ApplicationEntryPoint {
         }
     }
 
-    private static class SimpleSubscriberAdapter<T> implements Subscriber<T> {
+    private static class ResultSubscriberAdapter<T> implements Subscriber<T> {
+
+        private final Player player;
+
+        ResultSubscriberAdapter(Player player) {
+            this.player = player;
+        }
 
         @Override
         public void onSubscribe(Subscription subscription) {
@@ -53,18 +61,39 @@ public class ApplicationEntryPoint {
         }
 
         @Override
-        public void onNext(T element) {
-            System.out.println("onNext(" + element + ")");
+        public void onNext(T result) {
+            player.sendMessage("onNext(" + result + ")");
         }
 
         @Override
         public void onError(Throwable exception) {
-            System.out.println("onError(" + exception + ")");
+            player.sendMessage("onError(" + exception + ")");
         }
 
         @Override
         public void onComplete() {
-            System.out.println("onComplete()");
+            player.sendMessage("onComplete()");
+        }
+    }
+
+    interface Player {
+        void sendMessage(String message);
+        void addItem(int id, int quantity);
+    }
+
+    @RequiredArgsConstructor
+    private static class LoggingPlayer implements Player {
+
+        private final PrintStream out;
+
+        @Override
+        public void sendMessage(String message) {
+            out.println(message);
+        }
+
+        @Override
+        public void addItem(int id, int quantity) {
+            sendMessage("Adding " + quantity + " of item with id " + id);
         }
     }
 }
