@@ -10,9 +10,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Closeable;
+
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class GamePayments {
+public class GamePayments implements Closeable {
 
 	private final HttpService http;
 	private final PlayerStoreService store;
@@ -24,5 +26,10 @@ public class GamePayments {
 		PlayerStoreService store = injector.getInstance(PlayerStoreService.class);
 		TransactionService transactions = injector.getInstance(TransactionService.class);
 		return new GamePayments(http, store, transactions);
+	}
+
+	@Override
+	public void close() {
+		http.close();
 	}
 }
