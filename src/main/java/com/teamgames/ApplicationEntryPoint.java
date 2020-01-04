@@ -38,9 +38,9 @@ public class ApplicationEntryPoint {
             System.out.println("Beginning synchronous requests");
 
             final List<AbstractAPIResponse> responses = ImmutableList.of(
-                    store.confirmUsernameBlocking(confirm),
-                    store.sellProductBlocking(sell),
-                    transactions.claimPurchasesBlocking(claim)
+                    store.confirmUsername(confirm),
+                    store.sellProduct(sell),
+                    transactions.claimPurchases(claim)
             );
 
             responses.forEach(System.out::println);

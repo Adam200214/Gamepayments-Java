@@ -26,7 +26,7 @@ public class PlayerStoreService {
 		http.post(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT).subscribe(subscriber);
 	}
 
-	public PlayerStoreResponse confirmUsernameBlocking(ConfirmUsernameDTO request) {
+	public PlayerStoreResponse confirmUsername(ConfirmUsernameDTO request) {
 		return http.postBlocking(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT);
 	}
 
@@ -34,7 +34,7 @@ public class PlayerStoreService {
 		http.post(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT).subscribe(subscriber);
 	}
 
-	public PlayerStoreResponse sellProductBlocking(SellProductDTO request) {
+	public PlayerStoreResponse sellProduct(SellProductDTO request) {
 		return http.postBlocking(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT);
 	}
 

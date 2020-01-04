@@ -28,7 +28,7 @@ public class TransactionService {
         http.post(TransactionResponse.class, request, CLAIM_PURCHASE_ENDPOINT).subscribe(subscriber);
     }
 
-    public TransactionResponse claimPurchasesBlocking(ClaimPurchasesDTO request) {
+    public TransactionResponse claimPurchases(ClaimPurchasesDTO request) {
         return http.postBlocking(TransactionResponse.class, request, CLAIM_PURCHASE_ENDPOINT);
     }
 
