@@ -3,7 +3,9 @@ package com.teamgames.gamepayments.service;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.teamgames.gamepayments.response.TransactionResponse;
+import lombok.Builder;
 import lombok.Data;
+import org.reactivestreams.Subscriber;
 
 import java.util.Objects;
 
@@ -22,13 +24,17 @@ public class TransactionService {
         this.http = Objects.requireNonNull(http);
     }
 
-    public TransactionResponse claimPurchases(String username) {
-        final ClaimPurchasesDTO request = new ClaimPurchasesDTO(username);
+    public void claimPurchases(ClaimPurchasesDTO request, Subscriber<? super TransactionResponse> subscriber) {
+        http.post(TransactionResponse.class, request, CLAIM_PURCHASE_ENDPOINT).subscribe(subscriber);
+    }
+
+    public TransactionResponse claimPurchasesBlocking(ClaimPurchasesDTO request) {
         return http.postBlocking(TransactionResponse.class, request, CLAIM_PURCHASE_ENDPOINT);
     }
 
     @Data
-    private static class ClaimPurchasesDTO {
+    @Builder
+    public static class ClaimPurchasesDTO {
         private final String username;
     }
 }
