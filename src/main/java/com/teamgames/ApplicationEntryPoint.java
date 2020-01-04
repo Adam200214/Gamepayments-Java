@@ -1,10 +1,16 @@
 package com.teamgames;
 
 import com.google.common.collect.ImmutableList;
+import com.teamgames.gamepayments.response.AbstractAPIResponse;
 import com.teamgames.gamepayments.service.PlayerStoreService;
+import com.teamgames.gamepayments.service.PlayerStoreService.ConfirmUsernameDTO;
+import com.teamgames.gamepayments.service.PlayerStoreService.SellProductDTO;
 import com.teamgames.gamepayments.service.TransactionService;
+import com.teamgames.gamepayments.service.TransactionService.ClaimPurchasesDTO;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
+
+import java.util.List;
 
 public class ApplicationEntryPoint {
 
@@ -15,19 +21,27 @@ public class ApplicationEntryPoint {
 
             final Subscriber<Object> subscriber = new SimpleSubscriberAdapter<>();
 
-            final PlayerStoreService.ConfirmUsernameDTO confirm = PlayerStoreService.ConfirmUsernameDTO.builder().username("test").verificationKey("test").build();
-            final TransactionService.ClaimPurchasesDTO claim = TransactionService.ClaimPurchasesDTO.builder().username("test").build();
+            final ConfirmUsernameDTO confirm = ConfirmUsernameDTO.builder().username("test").verificationKey("test").build();
+            final SellProductDTO sell = SellProductDTO.builder().price(123).productId(123).productName("test").quantity(123).username("test").build();
+            final ClaimPurchasesDTO claim = ClaimPurchasesDTO.builder().username("test").build();
 
             //asynchronous requests
             System.out.println("Beginning asynchronous requests");
 
             store.confirmUsername(confirm, subscriber);
+            store.sellProduct(sell, subscriber);
             transactions.claimPurchases(claim, subscriber);
 
             //synchronous requests
             System.out.println("Beginning synchronous requests");
 
-            ImmutableList.of(store.confirmUsernameBlocking(confirm), transactions.claimPurchasesBlocking(claim)).forEach(System.out::println);
+            final List<AbstractAPIResponse> responses = ImmutableList.of(
+                    store.confirmUsernameBlocking(confirm),
+                    store.sellProductBlocking(sell),
+                    transactions.claimPurchasesBlocking(claim)
+            );
+
+            responses.forEach(System.out::println);
         }
     }
 
