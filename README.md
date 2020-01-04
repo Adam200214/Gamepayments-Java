@@ -47,5 +47,6 @@ payments.getClaimService().submit(apiKey, username);
 
 ## Credits
 [Jason MacKeigan](https://github.com/JasonMacKeigan)
+
 [Harrison Cole / Hc747](https://github.com/Hc747/)
 
