@@ -26,21 +26,7 @@ public class ClaimRequest implements Request<ClaimRequestResult> {
     }
 
     @Override
-    public ClaimRequestResult create(Executor httpClient) throws Exception {
-        URIBuilder builder = new URIBuilder()
-                .setScheme("https")
-                .setHost("api.gamepayments.net")
-                .setPath("/api/v1/client/global/claim-purchase")
-                .setPort(443)
-                .addParameter("username", username);
-
-        org.apache.http.client.fluent.Request request = org.apache.http.client.fluent.Request.Post(builder.build())
-                .setHeader("Authorization", Base64.encodeBase64String(apiKey.getBytes()))
-                .connectTimeout(10_000)
-                .socketTimeout(10_000);
-
-        Response response = httpClient.execute(request);
-
-        return new GsonBuilder().create().fromJson(response.returnContent().asString(), ClaimRequestResult.class);
+    public ClaimRequestResult call() throws Exception {
+        return null;
     }
 }
