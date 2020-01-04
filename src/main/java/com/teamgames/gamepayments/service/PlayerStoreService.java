@@ -2,10 +2,12 @@ package com.teamgames.gamepayments.service;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.teamgames.gamepayments.response.PlayerStoreResponse;
 
 import java.util.Map;
 
+@Singleton
 public class PlayerStoreService {
 
 	private static final String CONFIRM_USERNAME_ENDPOINT = "/api/v1/client/global/confirm-player-seller";

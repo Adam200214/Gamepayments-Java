@@ -2,6 +2,7 @@ package com.teamgames.gamepayments.service;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.teamgames.gamepayments.response.TransactionResponse;
 
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 /**
  * Created by Jason MK on 2020-01-02 at 1:11 p.m.
  */
+@Singleton
 public class TransactionService {
 
     private static final String CLAIM_PURCHASE_ENDPOINT = "/api/v1/client/global/claim-purchase";

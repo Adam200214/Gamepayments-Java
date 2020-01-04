@@ -1,6 +1,7 @@
 package com.teamgames.gamepayments.service;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.teamgames.gamepayments.configuration.Configuration;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpRequest;
@@ -17,6 +18,7 @@ import java.nio.charset.Charset;
 import java.util.Base64;
 
 @Getter
+@Singleton
 public class HttpService implements Closeable {
 
     private static final String DEFAULT_USER_AGENT = "GamepaymentsJavaClientAPI/%s";
@@ -26,8 +28,8 @@ public class HttpService implements Closeable {
     private final String authorization, agent;
 
     @Inject
-    public HttpService(ConfigurationService configurationService) throws MalformedURLException {
-        this.configuration = configurationService.getConfiguration();
+    public HttpService(ConfigurationService service) throws MalformedURLException {
+        this.configuration = service.getConfiguration();
         this.http = RxHttpClient.create(new URL(configuration.getAPIEndpoint()));
         this.authorization = Base64.getEncoder().encodeToString(configuration.getKey().getBytes(Charset.defaultCharset()));
         this.agent = String.format(DEFAULT_USER_AGENT, configuration.getVersion());
