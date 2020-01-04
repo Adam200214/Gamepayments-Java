@@ -5,6 +5,8 @@ import com.google.inject.Singleton;
 import com.teamgames.gamepayments.response.TransactionResponse;
 import lombok.Data;
 
+import java.util.Objects;
+
 /**
  * Created by Jason MK on 2020-01-02 at 1:11 p.m.
  */
@@ -17,7 +19,7 @@ public class TransactionService {
 
     @Inject
     public TransactionService(HttpService http) {
-        this.http = http;
+        this.http = Objects.requireNonNull(http);
     }
 
     public TransactionResponse claimPurchases(String username) {

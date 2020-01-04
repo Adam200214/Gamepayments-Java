@@ -1,4 +1,4 @@
-package com.teamgames.gamepayments.request;
+package com.teamgames.gamepayments.deprecated_request;
 
 /**
  * Created by Jason MK on 2020-01-02 at 3:08 p.m.

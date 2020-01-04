@@ -1,7 +1,7 @@
-package com.teamgames.gamepayments.request.impl.claim;
+package com.teamgames.gamepayments.deprecated_request.impl.claim;
 
-import com.teamgames.gamepayments.request.Request;
-import com.teamgames.gamepayments.request.result.impl.ClaimRequestResult;
+import com.teamgames.gamepayments.deprecated_request.Request;
+import com.teamgames.gamepayments.deprecated_request.result.impl.ClaimRequestResult;
 
 /**
  * Created by Jason MK on 2020-01-02 at 2:41 p.m.

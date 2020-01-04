@@ -1,6 +1,6 @@
-package com.teamgames.gamepayments.request;
+package com.teamgames.gamepayments.deprecated_request;
 
-import com.teamgames.gamepayments.request.result.Result;
+import com.teamgames.gamepayments.deprecated_request.result.Result;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

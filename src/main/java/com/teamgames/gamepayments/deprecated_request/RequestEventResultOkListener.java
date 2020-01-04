@@ -1,6 +1,6 @@
-package com.teamgames.gamepayments.request;
+package com.teamgames.gamepayments.deprecated_request;
 
-import com.teamgames.gamepayments.request.result.Result;
+import com.teamgames.gamepayments.deprecated_request.result.Result;
 
 /**
  * Created by Jason MK on 2020-01-02 at 3:18 p.m.

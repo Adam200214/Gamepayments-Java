@@ -1,9 +1,9 @@
-package com.teamgames.gamepayments.request;
+package com.teamgames.gamepayments.deprecated_request;
 
-import com.teamgames.gamepayments.request.result.Result;
-import com.teamgames.gamepayments.request.result.listener.impl.ResultErrorListener;
-import com.teamgames.gamepayments.request.result.listener.impl.ResultOkListener;
-import com.teamgames.gamepayments.request.result.listener.impl.ResultTimedOutListener;
+import com.teamgames.gamepayments.deprecated_request.result.Result;
+import com.teamgames.gamepayments.deprecated_request.result.listener.impl.ResultErrorListener;
+import com.teamgames.gamepayments.deprecated_request.result.listener.impl.ResultOkListener;
+import com.teamgames.gamepayments.deprecated_request.result.listener.impl.ResultTimedOutListener;
 
 import java.util.Iterator;
 import java.util.Queue;
