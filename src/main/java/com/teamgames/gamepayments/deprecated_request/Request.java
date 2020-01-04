@@ -1,7 +1,6 @@
-package com.teamgames.gamepayments.request;
+package com.teamgames.gamepayments.deprecated_request;
 
-import com.teamgames.gamepayments.request.result.Result;
-import org.apache.http.client.fluent.Executor;
+import com.teamgames.gamepayments.deprecated_request.result.Result;
 
 
 /**

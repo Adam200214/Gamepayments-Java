@@ -2,46 +2,34 @@ package com.teamgames.gamepayments.configuration;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import lombok.Getter;
+
+import java.util.Objects;
 
 /**
  * Created by Jason MK on 2020-01-02 at 12:15 p.m.
  */
-
+@Getter
 public class Configuration {
 
-    private final String version;
-
-    private final String address;
-
+    private final String key, version, address, localAddress;
     private final boolean local;
-
-    private final String localAddress;
 
     @Inject
     public Configuration(
+            @Named("gamepayments.api.key") String key,
             @Named("gamepayments.version") String version,
             @Named("gamepayments.address") String address,
             @Named("gamepayments.local.enabled") boolean local,
             @Named("gamepayments.local.address") String localAddress) {
-        this.version = version;
-        this.address = address;
+        this.key = Objects.requireNonNull(key);
+        this.version = Objects.requireNonNull(version);
+        this.address = Objects.requireNonNull(address);
         this.local = local;
-        this.localAddress = localAddress;
+        this.localAddress = Objects.requireNonNull(localAddress);
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public boolean isLocal() {
-        return local;
-    }
-
-    public String getLocalAddress() {
-        return localAddress;
+    public String getAPIEndpoint() {
+        return local ? localAddress : address;
     }
 }

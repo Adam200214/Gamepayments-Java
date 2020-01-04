@@ -1,48 +1,54 @@
 package com.teamgames.gamepayments.service;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.teamgames.gamepayments.response.PlayerStoreResponse;
+import lombok.Builder;
+import lombok.Data;
+import org.reactivestreams.Subscriber;
 
+import java.util.Objects;
+
+@Singleton
 public class PlayerStoreService {
 
-	private final ConfigurationService configurationService;
+	private static final String CONFIRM_USERNAME_ENDPOINT = "/api/v1/client/global/confirm-player-seller";
+	private static final String SELL_PRODUCT_ENDPOINT = "/api/v1/client/global/sell-player-product";
+
+	private final HttpService http;
 
 	@Inject
-	public PlayerStoreService(ConfigurationService configurationService) {
-		this.configurationService = configurationService;
+	public PlayerStoreService(HttpService http) {
+		this.http = Objects.requireNonNull(http);
 	}
 
-//	public PlayerStoreResponse confirmUsername(String apiKey, String username, String verificationKey) throws Exception {
-//		Map<String, Object> params = new LinkedHashMap<>();
-//
-//		params.put("username", username);
-//
-//		params.put("verificationKey", verificationKey);
-//
-//		final String address = configurationService.getConfiguration().isLocal() ? configurationService.getConfiguration().getLocalAddress()
-//				: configurationService.getConfiguration().getAddress();
-//
-////		final String serverResponse = Connection.sendPostParams(params, address + "/api/v1/client/global/confirm-player-seller", apiKey);
-//
-//		return new GsonBuilder().create().fromJson(serverResponse, PlayerStoreResponse.class);
-//	}
-//
-//	public PlayerStoreResponse sellProduct(String apiKey, String username, int productId, String productName, double price, int quantity) throws Exception {
-//		Map<String, Object> params = new LinkedHashMap<>();
-//
-//		params.put("username", username);
-//		params.put("productId", productId);
-//		params.put("productName", productName);
-//		params.put("price", price);
-//		params.put("quantity", quantity);
-//
-//		final String address = configurationService.getConfiguration().isLocal() ? configurationService.getConfiguration().getLocalAddress()
-//				: configurationService.getConfiguration().getAddress();
-//
-//		final String serverResponse = Connection.sendPostParams(params,
-//				address + "/api/v1/client/global/sell-player-product", apiKey);
-//
-//		return new GsonBuilder().create().fromJson(serverResponse, PlayerStoreResponse.class);
-//
-//	}
+	public void confirmUsername(ConfirmUsernameDTO request, Subscriber<? super PlayerStoreResponse> subscriber) {
+		http.post(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT).subscribe(subscriber);
+	}
 
+	public PlayerStoreResponse confirmUsername(ConfirmUsernameDTO request) {
+		return http.postBlocking(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT);
+	}
+
+	public void sellProduct(SellProductDTO request, Subscriber<? super PlayerStoreResponse> subscriber) {
+		http.post(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT).subscribe(subscriber);
+	}
+
+	public PlayerStoreResponse sellProduct(SellProductDTO request) {
+		return http.postBlocking(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT);
+	}
+
+	@Data
+	@Builder
+	public static class ConfirmUsernameDTO {
+		private final String username, verificationKey;
+	}
+
+	@Data
+	@Builder
+	public static class SellProductDTO {
+		private final String username, productName;
+		private final int productId, quantity;
+		private final double price;
+	}
 }
