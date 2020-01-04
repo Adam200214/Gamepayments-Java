@@ -1,9 +1,9 @@
 package com.teamgames.gamepayments.service;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.teamgames.gamepayments.response.PlayerStoreResponse;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerStoreService {
@@ -19,22 +19,22 @@ public class PlayerStoreService {
 	}
 
 	public PlayerStoreResponse confirmUsername(String username, String verificationKey) {
-		Map<String, Object> params = new HashMap<>();
-
-		params.put("username", username);
-		params.put("verificationKey", verificationKey);
+		final Map<String, String> params = ImmutableMap.of(
+				"username", username,
+				"verificationKey", verificationKey
+		);
 
 		return http.post(PlayerStoreResponse.class, params, CONFIRM_USERNAME_ENDPOINT);
 	}
 
 	public PlayerStoreResponse sellProduct(String username, int productId, String productName, double price, int quantity) {
-		Map<String, Object> params = new HashMap<>();
-
-		params.put("username", username);
-		params.put("productId", productId);
-		params.put("productName", productName);
-		params.put("price", price);
-		params.put("quantity", quantity);
+		final Map<String, ?> params = ImmutableMap.of(
+				"username", username,
+				"productId", productId,
+				"productName", productName,
+				"price", price,
+				"quantity", quantity
+		);
 
 		return http.post(PlayerStoreResponse.class, params, SELL_PRODUCT_ENDPOINT);
 	}

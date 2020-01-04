@@ -1,20 +1,20 @@
 package com.teamgames.gamepayments.response;
 
 import com.teamgames.gamepayments.model.Transaction;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 /**
  * @author Nelson Sanchez
  */
-@Getter
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class TransactionResponse extends AbstractAPIResponse {
 	
-	private final List<Transaction> transactions;
+	private List<Transaction> transactions;
 
-	public TransactionResponse(String message, String extendedMessage, List<Transaction> transactions) {
-		super(message, extendedMessage);
-		this.transactions = transactions;
-	}
 }

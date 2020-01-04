@@ -1,9 +1,9 @@
 package com.teamgames.gamepayments.service;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.teamgames.gamepayments.response.TransactionResponse;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,10 +20,10 @@ public class TransactionService {
         this.http = httpService;
     }
 
-    public TransactionResponse claimPurchases(String username) throws Exception {
-        Map<String, Object> params = new HashMap<>();
-
-        params.put("username", username);
+    public TransactionResponse claimPurchases(String username) {
+        final Map<String, String> params = ImmutableMap.of(
+                "username", username
+        );
 
         return http.post(TransactionResponse.class, params, CLAIM_PURCHASE_ENDPOINT);
     }

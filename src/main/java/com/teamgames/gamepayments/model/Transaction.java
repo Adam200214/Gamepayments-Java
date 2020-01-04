@@ -1,15 +1,17 @@
 package com.teamgames.gamepayments.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Nelson Sanchez
  */
 @Data
+@NoArgsConstructor
 public class Transaction {
-	public final String productId, name, username, paymentType, invoice, paymentStatus, deliveryStatus;
-	public final float price, priceWithDiscount, tax;
-	public final int quantity, allowReclaim, gameServer;
 
-	//TODO: consider refining data model / usage of DTO's / Kotlin
+	private String productId, name, username, paymentType, invoice, paymentStatus, deliveryStatus;
+	private float price, priceWithDiscount, tax;
+	private int quantity, allowReclaim, gameServer;
+
 }

@@ -1,11 +1,6 @@
 package com.teamgames.gamepayments.response;
 
-import com.teamgames.gamepayments.response.AbstractAPIResponse;
+import lombok.EqualsAndHashCode;
 
-public class PlayerStoreResponse extends AbstractAPIResponse {
-
-	public PlayerStoreResponse(String message, String extendedMessage) {
-		super(message, extendedMessage);
-	}
-
-}
+@EqualsAndHashCode(callSuper = true)
+public class PlayerStoreResponse extends AbstractAPIResponse {}

@@ -1,10 +1,12 @@
 package com.teamgames.gamepayments.response;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class AbstractAPIResponse {
 
-    protected final String message, extendedMessage;
+    protected String message, extendedMessage;
 
 }
