@@ -1,11 +1,9 @@
 package com.teamgames.gamepayments.service;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.teamgames.gamepayments.response.PlayerStoreResponse;
-
-import java.util.Map;
+import lombok.Data;
 
 @Singleton
 public class PlayerStoreService {
@@ -21,23 +19,24 @@ public class PlayerStoreService {
 	}
 
 	public PlayerStoreResponse confirmUsername(String username, String verificationKey) {
-		final Map<String, String> params = ImmutableMap.of(
-				"username", username,
-				"verificationKey", verificationKey
-		);
-
-		return http.post(PlayerStoreResponse.class, params, CONFIRM_USERNAME_ENDPOINT);
+		final ConfirmUsernameDTO request = new ConfirmUsernameDTO(username, verificationKey);
+		return http.post(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT);
 	}
 
 	public PlayerStoreResponse sellProduct(String username, int productId, String productName, double price, int quantity) {
-		final Map<String, ?> params = ImmutableMap.of(
-				"username", username,
-				"productId", productId,
-				"productName", productName,
-				"price", price,
-				"quantity", quantity
-		);
+		final SellProductDTO request = new SellProductDTO(username, productName, productId, quantity, price);
+		return http.post(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT);
+	}
 
-		return http.post(PlayerStoreResponse.class, params, SELL_PRODUCT_ENDPOINT);
+	@Data
+	private static class ConfirmUsernameDTO {
+		private final String username, verificationKey;
+	}
+
+	@Data
+	private static class SellProductDTO {
+		private final String username, productName;
+		private final int productId, quantity;
+		private final double price;
 	}
 }

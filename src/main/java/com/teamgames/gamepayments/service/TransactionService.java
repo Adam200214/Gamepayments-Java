@@ -1,11 +1,9 @@
 package com.teamgames.gamepayments.service;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.teamgames.gamepayments.response.TransactionResponse;
-
-import java.util.Map;
+import lombok.Data;
 
 /**
  * Created by Jason MK on 2020-01-02 at 1:11 p.m.
@@ -23,10 +21,12 @@ public class TransactionService {
     }
 
     public TransactionResponse claimPurchases(String username) {
-        final Map<String, String> params = ImmutableMap.of(
-                "username", username
-        );
+        final ClaimPurchasesDTO request = new ClaimPurchasesDTO(username);
+        return http.post(TransactionResponse.class, request, CLAIM_PURCHASE_ENDPOINT);
+    }
 
-        return http.post(TransactionResponse.class, params, CLAIM_PURCHASE_ENDPOINT);
+    @Data
+    private static class ClaimPurchasesDTO {
+        private final String username;
     }
 }
