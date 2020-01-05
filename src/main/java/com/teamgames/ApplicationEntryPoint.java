@@ -17,7 +17,7 @@ import java.util.List;
 public class ApplicationEntryPoint {
 
     public static void main(String[] args) {
-        try (GamePayments payments = GamePayments.create(null)) {
+        try (GamePayments payments = GamePayments.fromProperties(null)) {
             final PlayerStoreService store = payments.getStore();
             final TransactionService transactions = payments.getTransactions();
 
