@@ -23,19 +23,19 @@ public class PlayerStoreService {
 	}
 
 	public void confirmUsername(ConfirmUsernameDTO request, Subscriber<? super PlayerStoreResponse> subscriber) {
-		http.post(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT).subscribe(subscriber);
+		http.async(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT).subscribe(subscriber);
 	}
 
 	public PlayerStoreResponse confirmUsername(ConfirmUsernameDTO request) {
-		return http.postBlocking(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT);
+		return http.sync(PlayerStoreResponse.class, request, CONFIRM_USERNAME_ENDPOINT);
 	}
 
 	public void sellProduct(SellProductDTO request, Subscriber<? super PlayerStoreResponse> subscriber) {
-		http.post(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT).subscribe(subscriber);
+		http.async(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT).subscribe(subscriber);
 	}
 
 	public PlayerStoreResponse sellProduct(SellProductDTO request) {
-		return http.postBlocking(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT);
+		return http.sync(PlayerStoreResponse.class, request, SELL_PRODUCT_ENDPOINT);
 	}
 
 	@Data
