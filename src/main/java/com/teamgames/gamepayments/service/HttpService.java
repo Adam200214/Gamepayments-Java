@@ -27,7 +27,8 @@ public class HttpService implements Closeable {
     @Inject
     public HttpService(ConfigurationService service) throws MalformedURLException {
         Configuration configuration = service.getConfiguration();
-        this.client = RxHttpClient.create(new URL(configuration.getAPIEndpoint()));
+        URL endpoint = new URL(configuration.getAPIEndpoint());
+        this.client = RxHttpClient.create(endpoint);
         this.authorization = Base64.getEncoder().encodeToString(configuration.getKey().getBytes(Charset.defaultCharset()));
         this.agent = String.format(DEFAULT_USER_AGENT, configuration.getVersion());
     }
